@@ -1,0 +1,98 @@
+<!-- <nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="/">Home</a></li>
+      <li><a href="/Albums">Albums</a></li>
+      <li><a href="/users">USERS</a><li>
+      <li><a href="/connect">CONNECT</a><li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      {% if session.logged_in %}
+        <li class="active"><a href="/dashboard">DASHBOARD</a><li>
+        <li class="active"><a href="/logout">logout</a><li>
+      {% else %}
+        <li class="active"><a href="/register">Register</a></li>
+        <li class="active"><a href="/login">Login</a></li>
+      {% endif %}
+
+    </ul>
+    <form action="/new" class="navbar-form navbar-left" method="POST">
+      <div class="form-group">
+        <input type="text" class="form-control" name="give" placeholder="Search">
+      </div>
+      <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+
+</nav> -->
+
+
+  <style>
+    *{
+      box-sizing: border-box;
+      margin: 0%;
+      padding: 0%;
+    }
+    body{
+      background-color: white;
+    }
+    nav{
+      width: 100%;
+      height: 50px;
+      background-color: black;
+      color:white;
+      border: 0.2px solid black;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      
+    }
+    
+    nav ul{
+      list-style: none;
+      display: flex;
+      margin: 0;
+    }
+    nav ul li a{
+      padding: 0 20px;
+      text-decoration: none;
+      font-size: larger;
+      text-transform: uppercase;
+      color: white;
+    }
+    .button{
+      margin: 0 20px;
+      padding: 10px;
+      background-color: antiquewhite;
+      border-style: none;
+      border-radius: 10%;
+      font-weight: 600;
+      font-size: 14px;
+    }
+  </style>
+
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/Albums">Albums</a></li>
+    </ul>
+    <ul>
+      {% if session.logged_in %}
+      <li><a href="/dashboard">Dashboard</a></li>
+      
+      <li><a href="/logout">Logout</a></li>
+      {% else %}
+      <li ><a href="/register">Register</a></li>
+    <li ><a href="/login">Login</a></li>
+  {% endif %}
+    </ul>
+    <!-- <input type="button" value="Logout" class="button"> -->
+
+    
+  </nav>
+  <div style="height: 50px;">
+
+  </div>
+
+
