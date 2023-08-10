@@ -22,7 +22,7 @@ app.config['MYSQL_PASSWORD']='Madhu@2023'
 app.config['MYSQL_DB']='mymusic'
 app.config['MYSQL_CURSORCLASS']='DictCursor'
 
-app.config.from_pyfile('config.cfg')
+
 mail=Mail(app)
 
 s=URLSafeTimedSerializer('secret123')
@@ -84,20 +84,6 @@ def register():
 	return render_template('register.html',form=form)
 
 
-#sendind the confirmation link to email
-# @app.route('/confirm_email/<token>')
-# def confirm_email(token):
-# 	cur=mysql.connection.cursor()
-# 	try:
-# 		email=s.loads(token,salt='email-confirm',max_age=3600)
-# 	except SignatureExpired:
-# 		flash('The confirmation link is invalid or has expired.','danger')
-# 	else:
-# 		cur.execute("INSERT INTO users(name,email,username,password) VALUES(%s,%s,%s,%s)",(name1,email1,usernname1,password1))
-# 		mysql.connection.commit()
-# 		cur.close()
-# 		flash('Successfully verified','success')
-# 	return redirect(url_for('login'))
 
 
 #login
@@ -150,40 +136,6 @@ def logout():
 	session.clear()
 	flash('you are now logout','success')
 	return redirect(url_for('login'))
-
-#search
-# @app.route('/new',methods=['POST'])
-# def new():
-# 	string=""
-# 	co=request.form['give']
-# 	song=co
-# 	song_name=co+'.mp3'
-# 	cur=mysql.connection.cursor()
-# 	result=cur.execute("SELECT * FROM songs_list WHERE song_name=%s",[song_name])
-# 	albu69=cur.fetchall()
-# 	if result>0:
-# 		return render_template('search.html',albu=albu69)
-# 	else:
-# 		try:
-# 			page = requests.get("https://www.youtube.com/results?search_query="+song)
-# 			soup = BeautifulSoup(page.text,'html.parser')
-# 			for div in soup.find_all('div', { "class" : "yt-lockup-video" }):
-# 				if div.get("data-context-item-id") != None:
-# 					video_id = div.get("data-context-item-id")
-# 					break
-# 			os.system('youtube-dl --extract-audio --audio-format mp3 -o "akhil.mp3" https://www.youtube.com/watch?v='+video_id)
-# 			os.system("mv *.mp3 ./static/music/")
-# 			os.rename("static/music/akhil.mp3","static/music/"+song_name)
-# 			string="/static/music/"+song_name
-# 			cur=mysql.connection.cursor()
-# 			cur.execute("INSERT INTO songs_list(path,album,song_name) VALUES (%s,%s,%s)",(string,"NA",song_name))
-# 			mysql.connection.commit()
-# 			result=cur.execute("SELECT * FROM songs_list WHERE song_name=%s",[song_name])
-# 			albu99=cur.fetchall()
-# 			return render_template('search.html',albu=albu99)
-# 		except NameError:
-# 			flash('Song Not Found','success')
-# 			return render_template('dashboard.html')
 
 
 @app.route('/dashboard')
@@ -261,20 +213,6 @@ def create_private_playlist():
 	return render_template('add_playlist.html',form=form)
 
 
-# @app.route('/users')
-# @is_logged_in
-# def users():
-# 	cur=mysql.connection.cursor()
-# 	result=cur.execute("SELECT * from users")
-# 	songs=cur.fetchall()
-# 	if result>0:
-# 		return render_template('Dashboard.html',songs=songs)
-# 	else:
-# 		msg="NO PLAYLIST FOUND "
-
-# 	return render_template('Dashboard.html',msg=msg)
-# 	cur.close()
-
 
 @app.route('/users/playlist/<string:idd>')
 @is_logged_in
@@ -290,58 +228,11 @@ def u_play(idd):
 	cur.close()
 
 
-# @app.route('/Reputation')
-# @is_logged_in
-# def play():
-# 	cur=mysql.connection.cursor()
-# 	cur.execute("SELECT * FROM songs_list WHERE album LIKE 'rep%'")
-# 	albu=cur.fetchall()
-# 	result=cur.execute("SELECT * from songs WHERE user_id = %s",[session['id']])
-# 	songs=cur.fetchall()
-# 	if result>0:
-# 		return render_template('home.html',songs=songs,albu=albu)
-# 	else:
-# 		songs=0
-# 		return render_template('home.html',albu=albu,song=songs)
-# 	cur.close()
-# 	#    app.logger.info(albu[11]["path"]
-# 	return render_template('home.html',albu=albu)
 
 
-@app.route('/Camila')
-@is_logged_in
-def cam():
-		cur=mysql.connection.cursor()
-		cur.execute("SELECT * FROM songs_list WHERE album LIKE 'Cam%'")
-		albu1=cur.fetchall()
-		result=cur.execute("SELECT * from songs WHERE user_id = %s",[session['id']])
-		songs=cur.fetchall()
-		if result>0:
-			return render_template('camila.html',songs=songs,albu=albu1)
-		else:
-			songs=0
-			return render_template('camila.html',albu=albu1,song=songs)
-		cur.close()
-		#    app.logger.info(albu[11]["path"]
-		return render_template('camila.html',albu=albu1)
 
 
-@app.route('/CTRL')
-@is_logged_in
-def sza():
-		cur=mysql.connection.cursor()
-		cur.execute("SELECT * FROM songs_list WHERE album LIKE 'SZA%'")
-		albu2=cur.fetchall()
-		result=cur.execute("SELECT * from songs WHERE user_id = %s",[session['id']])
-		songs=cur.fetchall()
-		if result>0:
-			return render_template('ctrl.html',songs=songs,albu=albu2)
-		else:
-			songs=0
-			return render_template('ctrl.html',albu=albu2,song=songs)
-		cur.close()
-		#    app.logger.info(albu[11]["path"]
-		return render_template('ctrl.html',albu=albu2)
+
 
 @app.route('/BlackPanther')
 @is_logged_in
@@ -359,72 +250,6 @@ def panther():
 			cur.close()
 			#    app.logger.info(albu[11]["path"]
 			return render_template('blackpanther.html',albu=albu3)
-
-
-# @app.route('/Damn')
-# @is_logged_in
-# def damn():
-# 	cur=mysql.connection.cursor()
-# 	cur.execute("SELECT * FROM songs_list WHERE album LIKE 'Ken%'")
-# 	albu4=cur.fetchall()
-# 	result=cur.execute("SELECT * from songs WHERE user_id = %s",[session['id']])
-# 	songs=cur.fetchall()
-# 	if result>0:
-# 		return render_template('damn.html',songs=songs,albu=albu4)
-# 	else:
-# 		songs=0
-# 		return render_template('damn.html',albu=albu4,song=songs)
-# 	cur.close()
-# 	#    app.logger.info(albu[11]["path"]
-# 	return render_template('damn.html',albu=albu4)
-
-
-@app.route('/SGFG')
-@is_logged_in
-def sgfg():
-	cur=mysql.connection.cursor()
-	cur.execute("SELECT * FROM songs_list WHERE album LIKE '5 S%'")
-	albu5=cur.fetchall()
-	result=cur.execute("SELECT * from songs WHERE user_id = %s",[session['id']])
-	songs=cur.fetchall()
-	if result>0:
-		return render_template('sgfg.html',songs=songs,albu=albu5)
-	else:
-		songs=0
-		return render_template('sgfg.html',albu=albu5,song=songs)
-	cur.close()
-
-
-# @app.route('/revival')
-# @is_logged_in
-# def revival():
-# 	cur=mysql.connection.cursor()
-# 	cur.execute("SELECT * FROM songs_list WHERE album LIKE 'Emi%'")
-# 	albu6=cur.fetchall()
-# 	result=cur.execute("SELECT * from songs WHERE user_id = %s",[session['id']])
-# 	songs=cur.fetchall()
-# 	if result>0:
-# 		return render_template('revival.html',songs=songs,albu=albu6)
-# 	else:
-# 		songs=0
-# 		return render_template('revival.html',albu=albu6,song=songs)
-# 	cur.close()
-# #	app.logger.info(albu5[14]["path"])
-
-# @app.route('/ManOfWoods')
-# @is_logged_in
-# def manof():
-# 	cur=mysql.connection.cursor()
-# 	cur.execute("SELECT * FROM songs_list WHERE album LIKE 'Jus%'")
-# 	albu7=cur.fetchall()
-# 	result=cur.execute("SELECT * from songs WHERE user_id = %s",[session['id']])
-# 	songs=cur.fetchall()
-# 	if result>0:
-# 		return render_template('manofwoods.html',songs=songs,albu=albu7)
-# 	else:
-# 		songs=0
-# 		return render_template('manofwoods.html',albu=albu7,song=songs)
-# 	cur.close()
 
 
 @app.route('/save_playlist/<string:name>/<string:ide>')
